@@ -16,8 +16,9 @@ public enum ResultCodeEnum {
     FAIL(201, "失败"),
     SERVICE_ERROR(2012, "服务异常"),
     DATA_ERROR(204, "数据异常"),
+    ACCOUNT_STOP(205,"密码错误"),
 
-    LOGIN_AUTH(208, "未登陆"),
+    LOGIN_AUTH(208, "认证失败，未登录"),
     PERMISSION(209, "没有权限")
     ;
 

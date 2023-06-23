@@ -1,9 +1,12 @@
 package com.it.config;
 
 import com.it.Result;
+import com.it.ResultCodeEnum;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * 全局异常处理类
@@ -21,6 +24,17 @@ public class GlobalExceptionHandler {
     public Result error(Exception e){
         e.printStackTrace();
         return Result.fail().message("执行全局异常");
+    }
+
+    /**
+     * spring security异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    public Result error(AccessDeniedException e) throws AccessDeniedException {
+        return Result.build(null, ResultCodeEnum.PERMISSION);
     }
 
     // 特定异常处理

@@ -1,16 +1,11 @@
 package com.it.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.it.mapper.SysUserMapper;
 import com.it.model.system.SysUser;
-import com.it.service.SysUserRoleService;
 import com.it.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.it.vo.system.AssginRoleVo;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -34,4 +29,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 3.调用方法修改
         baseMapper.updateById(sysUser);
     }
+
+    /**
+     * 根据用户名获取用户
+     *
+     * @param username 用户名
+     * @return {@link SysUser}
+     */
+    @Override
+    public SysUser getUserByName(String username) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper
+                .eq(SysUser::getUsername,username);
+        return baseMapper.selectOne(sysUserLambdaQueryWrapper);
+    }
 }
+
