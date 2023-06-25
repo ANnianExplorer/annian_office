@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,7 +28,8 @@ import javax.annotation.Resource;
  */
 @Api(tags = "用户管理接口")
 @RestController
-@RequestMapping("/admin/system/sysUser")
+@RequestMapping(value = "/admin/system/sysUser")
+@CrossOrigin  //跨域
 public class SysUserController {
     @Resource
     private SysUserService sysUserService;
@@ -105,6 +107,17 @@ public class SysUserController {
     public Result updateStatus(@PathVariable Long id, @PathVariable Integer status) {
         sysUserService.updateStatus(id, status);
         return Result.ok();
+    }
+
+    /**
+     * 员工端获取当前用户基本信息
+     * @return
+     */
+    @ApiOperation(value = "员工端获取当前用户基本信息")
+    @GetMapping("/getCurrentUser")
+    public Result getCurrentUser() {
+        Map<String,Object> map = sysUserService.getCurrentUser();
+        return Result.ok(map);
     }
 }
 
