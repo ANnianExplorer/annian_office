@@ -1,11 +1,15 @@
 package com.it.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.it.custom.LoginUserInfoHelper;
 import com.it.mapper.SysUserMapper;
 import com.it.model.system.SysUser;
 import com.it.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,6 +46,24 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUserLambdaQueryWrapper
                 .eq(SysUser::getUsername,username);
         return baseMapper.selectOne(sysUserLambdaQueryWrapper);
+    }
+
+    /**
+     * 员工端得到用户信息
+     * @return
+     */
+    @Override
+    public Map<String, Object> getCurrentUser() {
+        SysUser sysUser = baseMapper.selectById(LoginUserInfoHelper.getUserId());
+        //SysDept sysDept = sysDeptService.getById(sysUser.getDeptId());
+        //SysPost sysPost = sysPostService.getById(sysUser.getPostId());
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", sysUser.getName());
+        map.put("phone", sysUser.getPhone());
+        //map.put("deptName", sysDept.getName());
+        //map.put("postName", sysPost.getName());
+        System.out.println("++++++++++++++++++++");
+        return map;
     }
 }
 
