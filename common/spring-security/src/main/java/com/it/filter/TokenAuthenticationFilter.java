@@ -54,7 +54,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
         } else {
-            ResponseUtil.out(response, Result.build(null, ResultCodeEnum.PERMISSION));
+            ResponseUtil.out(response, Result.build(null, ResultCodeEnum.LOGIN_AUTH));
         }
     }
 

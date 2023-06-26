@@ -41,3 +41,9 @@ spring:
     history-level: full
     #校验流程文件，默认校验resources下的process 文件夹的流程文件
     check-process-definitions: true
+# 微信公众号
+wechat:
+  mpAppId: wx9879002acd119720
+  mpAppSecret: d2992395202e832a098a5d645844a2b2
+  # 授权回调获取用户信息接口地址
+  userInfoUrl: http://anniantooffice.free.idcfengye.com/admin/wechat/userInfo

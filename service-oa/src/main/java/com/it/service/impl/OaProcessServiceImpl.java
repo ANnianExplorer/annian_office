@@ -12,11 +12,8 @@ import com.it.mapper.OaProcessMapper;
 import com.it.model.process.ProcessRecord;
 import com.it.model.process.ProcessTemplate;
 import com.it.model.system.SysUser;
-import com.it.service.OaProcessRecordService;
-import com.it.service.OaProcessService;
+import com.it.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.it.service.OaProcessTemplateService;
-import com.it.service.SysUserService;
 import com.it.vo.process.ApprovalVo;
 import com.it.vo.process.ProcessFormVo;
 import com.it.vo.process.ProcessQueryVo;
@@ -78,6 +75,9 @@ public class OaProcessServiceImpl extends ServiceImpl<OaProcessMapper, Process> 
 
     @Resource
     private OaProcessRecordService processRecordService;
+
+    @Resource
+    private MessageService messageService;
 
     @Override
     public IPage<ProcessVo> selectPage(Page<ProcessVo> pageParam, ProcessQueryVo processQueryVo) {
@@ -150,6 +150,7 @@ public class OaProcessServiceImpl extends ServiceImpl<OaProcessMapper, Process> 
             String userName = user.getName();
             nameList.add(userName);
             //TODO 6.推送消息
+            messageService.pushPendingMessage(process.getId(), user.getId(), task.getId());
 
         }
         process.setProcessInstanceId(processInstance.getId());
@@ -290,6 +291,7 @@ public class OaProcessServiceImpl extends ServiceImpl<OaProcessMapper, Process> 
                 SysUser sysUser = sysUserService.getUserByName(assignee);
                 assigneeList.add(sysUser.getName());
                 // TODO 公众号推送
+                messageService.pushProcessedMessage(process.getId(), sysUser.getId(), Integer.valueOf(task.getId()));
             }
             process.setStatus(1);
             process.setDescription("等待" + StringUtils.join(assigneeList.toArray(),",") + "审批");
