@@ -45,5 +45,5 @@ spring:
 wechat:
   mpAppId:
   mpAppSecret:
-  # 授权回调获取用户信息接口地址111
-  userInfoUrl: http:///admin/wechat/userInfo
+  # 授权回调获取用户信息接口地址
+  userInfoUrl: http://【8080的内网穿透地址】/admin/wechat/userInfo
