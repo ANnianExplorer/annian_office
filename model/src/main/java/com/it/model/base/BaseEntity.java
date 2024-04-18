@@ -29,4 +29,5 @@ public class BaseEntity implements Serializable {
 
     @TableField(exist = false)
     private Map<String,Object> param = new HashMap<>();
+    
 }
